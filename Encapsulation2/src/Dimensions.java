@@ -35,7 +35,14 @@ public class Dimensions {
         return length;
     }
 
-    public int getDimensions() {
+    public int getVolume() {
         return width * height * length;
+    }
+
+
+    @Override
+    public String toString() {
+return width + "X" + length + "X" + height;
+
     }
 }

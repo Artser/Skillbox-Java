@@ -5,7 +5,6 @@ public class CargoInformation {
     private final String registrationNumber;
     private final boolean fragile;
     private final Dimensions dimensions;
-    private String items;
 
     public CargoInformation(Dimensions dimensions, int weight, String deliveryAdress, boolean flip, String registrationNumber, boolean fragile){
         this.dimensions = dimensions;
@@ -14,6 +13,7 @@ public class CargoInformation {
         this.flip = flip;
         this.registrationNumber = registrationNumber;
         this.fragile = fragile;
+
     }
 
     public CargoInformation setDimensions (Dimensions dimensions) {
@@ -65,7 +65,8 @@ public class CargoInformation {
         return new CargoInformation(dimensions, weight, deliveryAdress, flip, registrationNumber, fragile);
     }
 
+
     public String toString() {
-        return "Информация о грузе: " + "\n" + "Габариты " + "\n" + "Вес" + weight + " кг " + "\n" + "Адрес доставки :" + deliveryAdress + "\n" + "Можно переворачивать :" + flip + "\n" + "Регистрационный номер " + registrationNumber + "\n" + "Хрупкий " + fragile + "\n";
+        return "Информация о грузе: " + "\n" + "Габариты " + dimensions+ "\n" + "Вес " + weight + " кг " + "\n" + "Адрес доставки: " + deliveryAdress + "\n" + "Можно переворачивать: " + flip + "\n" + "Регистрационный номер " + registrationNumber + "\n" + "Хрупкий " + fragile + "\n";
     }
 }
