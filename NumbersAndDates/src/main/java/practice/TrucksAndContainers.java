@@ -9,7 +9,7 @@ public class TrucksAndContainers {
     public static int containerInTruck = 12;
     public static int boxInContainer = 27;
     public static void main(String[] args) {
-         Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         System.out.print("Введите количество коробок : ");
 
         //получение количество коробок от пользователя
