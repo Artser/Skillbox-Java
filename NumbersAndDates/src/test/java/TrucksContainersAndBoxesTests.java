@@ -62,11 +62,11 @@ class TrucksContainersAndBoxesTests {
         launchApplication(
                 collectTestInput("1"),
                 collectTestOutput("Грузовик: 1",
-                                "\tКонтейнер: 1",
-                                "\t\tЯщик: 1",
-                                "Необходимо:",
-                                "грузовиков - 1 шт.",
-                                "контейнеров - 1 шт."));
+                        "\tКонтейнер: 1",
+                        "\t\tЯщик: 1",
+                        "Необходимо:",
+                        "грузовиков - 1 шт.",
+                        "контейнеров - 1 шт."));
     }
 
     @Test
