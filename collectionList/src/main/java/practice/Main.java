@@ -6,57 +6,50 @@ public class Main {
     private static final TodoList todoList = new TodoList();
 
     public static void main(String[] args) {
-        System.out.println("Введите команду:");
-
-        while (true) {
+        boolean work = true;
+        while (work) {
+            System.out.println("Введите команду:");
             String input = new Scanner(System.in).nextLine();
             String[] commandElements = input.split(" ");
 
-            switch (commandElements[0]) {
+            int index = commandElements.length > 1 ? isDigits(commandElements[1]) : -1;
+
+
+            switch (commandElements[0].toUpperCase()) {
                 case ("ADD"):
-                    if (isDigits(commandElements[1])) {
-                        todoList.add(Integer.parseInt(commandElements[1]), getCase(commandElements));
+                    if (index >= 0) {
+                        todoList.add(index, getCase(commandElements, 2));
                     } else {
-                        todoList.add(getCase(commandElements));
+                        todoList.add(getCase(commandElements, 1));
                     }
                     break;
                 case ("EDIT"):
-                    todoList.edit(Integer.parseInt(commandElements[1]), getCase(commandElements));
+                    todoList.edit(index, getCase(commandElements, 2));
                     break;
                 case ("LIST"):
                     todoList.getTodos();
                     break;
                 case ("DELETE"):
-                    todoList.delete(Integer.parseInt(commandElements[1]));
+                    todoList.delete(index); break;
+                default: work = false;
             }
         }
     }
 
-    private static boolean isDigits(String text) {
-        boolean number = true;
-
-        for (int i = 0; i < text.length(); i++) {
-            if (!Character.isDigit(text.charAt(i))) {
-                number = false;
-            }
+    private static int isDigits(String text) {
+        try {
+            int i = Integer.parseInt(text);
+            return i >= 0 ? i : -1;
+        } catch (NumberFormatException ex) {
+            return -1;
         }
-
-        return number;
     }
 
-    private static String getCase(String[] array) {
+    private static String getCase(String[] array, int begin) {
         StringBuilder sb = new StringBuilder();
-
-        if (isDigits(array[1])) {
-            for (int i = 2; i < array.length; i++) {
-                sb.append(array[i]).append(" ");
-            }
-        } else {
-            for (int i = 1; i < array.length; i++) {
-                sb.append(array[i]).append(" ");
-            }
+        for (int i = begin; i < array.length; i++){
+            sb.append(array[i]).append(" ");
         }
-
         return sb.toString().trim();
     }
 }
