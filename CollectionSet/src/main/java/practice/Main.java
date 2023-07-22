@@ -1,8 +1,10 @@
+package practice;
+
 import java.util.Scanner;
 
 public class Main {
     public static final String WRONG_EMAIL_ANSWER = "Неверный формат email";
-    
+    public static final EmailList emailList = new EmailList();
     /*
         Пример вывода списка Email, после ввода команды LIST в консоль:
         test@test.com
@@ -19,29 +21,26 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        
+
         while (true) {
             String input = scanner.nextLine();
             if (input.equals("0")) {
                 break;
             }
-            
-            // write code here
-            String[] inputArgs = input.split("\\s");//не понимаю эту строчку
+
+            //write code here
+            String[] inputArgs = input.split("\\s");
             String command = inputArgs[0];
 
-            if(command.equals("ADD"))
-            {
+            if (command.equals("ADD")) {
                 emailList.add(inputArgs[1]);
             }
-
-            if (command.equals("LIST"))
-            {
-                for (String email : emailList.getSortedEmails())
-                {
+            if (command.equals("LIST")) {
+                for (String email : emailList.getSortedEmails()) {
                     System.out.println(email);
                 }
             }
         }
     }
 }
+
