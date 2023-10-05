@@ -1,6 +1,5 @@
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.EmbeddedId;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,11 +10,11 @@ import java.io.Serializable;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class  SubscriptionKey implements Serializable {
-    @Column(name = "student_id")
-    private int studentId;
+public class PurchaseKey implements Serializable {
+    @Column (name = "student-name")
+    private String studentName;
 
-    @Column(name = "course_id")
-    private int courseId;
+    @Column (name = "course_name")
+    private String courseName;
 
 }

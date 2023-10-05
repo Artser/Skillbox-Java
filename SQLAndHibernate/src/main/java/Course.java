@@ -4,7 +4,6 @@ import lombok.Setter;
 
 import java.util.List;
 
-//import javax.persistence.*;
 
 @Entity
 @Table(name = "Courses")
@@ -22,100 +21,25 @@ public class Course {
     private CourseType type;
     private String description;
 
-@ManyToOne (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "teacher_id")
     private Teacher teacher;
-    @Column(name = "students_count")
-    private  int studentsCount;
-    private int price;
-    @Column(name = "price_per_hour")
+    @Column(name = "students_count",nullable = true) // nullable = true можно пустым?
+    private Integer studentCount;//почему не int
+    private Integer price; //почему не int
+    @Column(name = "price_per_hour", nullable = true)
     private float pricePerHour;
 
 
-
-    @ManyToMany (cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Subscriptions",
-    joinColumns = {@JoinColumn(name = "course_id")},
+            joinColumns = {@JoinColumn(name = "course_id")},
             inverseJoinColumns = {@JoinColumn(name = "student_id")}
     )
     private List<Student> students;
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public CourseType getType() {
-        return type;
-    }
-
-    public void setType(CourseType type) {
-        this.type = type;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
-    }
-
-    public int getStudentsCount() {
-        return studentsCount;
-    }
-
-    public void setStudentsCount(int studentsCount) {
-        this.studentsCount = studentsCount;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public float getPricePerHour() {
-        return pricePerHour;
-    }
-
-    public void setPricePerHour(float pricePerHour) {
-        this.pricePerHour = pricePerHour;
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
+@Override
+    public String toString() {
+        return id + " " + name + " [" + teacher + " ]" + students.size(); // для чего это строка
     }
 
 }
