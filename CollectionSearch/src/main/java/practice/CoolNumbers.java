@@ -3,17 +3,14 @@ package practice;
 import java.util.*;
 
 public class CoolNumbers {
-//Так и не поняла где здесь про 2 млн и про кРАСИВЫЕ номера как и весь код в целом
     public static List<String> generateCoolNumbers() {
         String[] lettersForNumbers1 = {"А", "В", "Е", "К", "М", "Н", "О", "Р", "С", "Т", "У", "Х"};
-        String[] lettersForNumbers2 = new String[(lettersForNumbers1.length - 1) *
-                (lettersForNumbers1.length - 1) + 1];//для чего здесь -1 и +1 да еще и с умножением
-
-        for (int i = 0; i < lettersForNumbers1.length; i++) {
-            for (int j = 0; j < lettersForNumbers1.length; j++) {
+        String[] lettersForNumbers2 = new String[lettersForNumbers1.length * lettersForNumbers1.length];
+        int n = lettersForNumbers1.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
                 StringBuilder builder = new StringBuilder();
-                lettersForNumbers2[i * 10 + j] = builder.append(lettersForNumbers1[i]).
-                        append(lettersForNumbers1[j]).toString();
+                lettersForNumbers2[i * n + j] = builder.append(lettersForNumbers1[i]).append(lettersForNumbers1[j]).toString();
             }
         }
 
@@ -21,11 +18,10 @@ public class CoolNumbers {
         for (int i = 0; i < digitsForNumbers.length; i++) {
             digitsForNumbers[i] = Integer.toString(((i + 1) * 111));
         }
-
         List<String> coolNumbers = new ArrayList<>();
         for (int i = 1; i < 200; i++) {
             StringBuilder region = new StringBuilder();
-            String formatRegion = region.append("00").append(i).substring(region.length() - 3);
+            String formatRegion = (i < 10 ? "0" : "") + String.valueOf(i);
 
             for (int j = 0; j < digitsForNumbers.length; j++) {
                 for (int k = 0; k < lettersForNumbers1.length; k++) {
@@ -34,27 +30,29 @@ public class CoolNumbers {
                         coolNumbers.add(builder.append(lettersForNumbers1[k]).
                                 append(digitsForNumbers[j]).append(lettersForNumbers2[l]).
                                 append(formatRegion).toString());
+
                     }
                 }
             }
-        }
 
+        }
         return coolNumbers;
     }
 
-    public static boolean bruteForceSearchInList(List<String> list, String number) {
+    public static boolean bruteForceSearchInList(List<String> list,String number) {
         return list.contains(number);
     }
 
-    public static boolean binarySearchInList(List<String> sortedList, String number) {
-        return Collections.binarySearch(sortedList, number) >= 0;
+    public static boolean binarySearchInList(List<String> sortedList, String number){
+        return Collections.binarySearch(sortedList, number) >=0;
     }
 
-    public static boolean searchInHashSet(HashSet<String> hashSet, String number) {
+    public static boolean searchInHashSet (HashSet<String> hashSet, String number){
+
         return hashSet.contains(number);
     }
 
-    public static boolean searchInTreeSet(TreeSet<String> treeSet, String number) {
+    public static boolean searchInTreeSet(TreeSet<String> treeSet, String number){
         return treeSet.contains(number);
     }
 }

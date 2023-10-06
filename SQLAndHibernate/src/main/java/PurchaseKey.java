@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Setter
 @EqualsAndHashCode
 public class PurchaseKey implements Serializable {
-    @Column (name = "student-name")
+    @Column (name = "student_name")
     private String studentName;
 
     @Column (name = "course_name")

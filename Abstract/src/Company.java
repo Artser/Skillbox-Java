@@ -1,10 +1,7 @@
-package company;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class Company {
@@ -24,12 +21,8 @@ public class Company {
             ((TopManager) slave).setOwnCompany(this);
         }
         slave.setSalary();   // только после этого назначается зарплата
-        if (slave instanceof Manager) // если сотрудник менеджер, то пересчитываем бонус топ-менеджеров, так как изменится доход компании
-        {
-            for (Employee employee : allSlavesOfCompany) {
-                if (employee instanceof TopManager)
-                    ((TopManager) employee).recalculationBonus(this.getIncome()); // передаём в метод пересчёта бонуса текущий доход.
-            }
+        if (slave instanceof Manager) { // если сотрудник менеджер, то пересчитываем бонус топ-менеджеров, так как изменится доход компании
+            recalculateTopManagers();
         }
     }
 
@@ -45,12 +38,15 @@ public class Company {
         } else {
             System.out.println("Такой сотрудник здесь не работает");
         }
-        if (slave instanceof Manager) // если сотрудник менеджер, то пересчитываем зарплату топ-менеджеров, так как изменится доход компании
-        {
-            for (Employee employee : allSlavesOfCompany) {
-                if (employee instanceof TopManager)
-                    ((TopManager) employee).recalculationBonus(this.getIncome());  // передаём в метод пересчёта бонуса текущий доход.
-            }
+        if (slave instanceof Manager) { // если сотрудник менеджер, то пересчитываем зарплату топ-менеджеров, так как изменится доход компании
+            recalculateTopManagers();
+        }
+    }
+
+    private void recalculateTopManagers() {
+        for (Employee employee : allSlavesOfCompany) {
+            if (employee instanceof TopManager)
+                ((TopManager) employee).recalculationBonus();  // передаём в метод пересчёта бонуса текущий доход.
         }
     }
 
@@ -81,12 +77,23 @@ public class Company {
     }
 
     public List<Employee> getTopSalaryStaff(int count) {
-        Collections.sort(allSlavesOfCompany, Collections.<Employee>reverseOrder()); // сортируем по убыванию
-        return allSlavesOfCompany.subList(0, count);
+        if (count < 0 || count > allSlavesOfCompany.size()) {
+            System.err.println("Неправильный параметр - количество сотрудников!");
+            return new ArrayList<Employee>();
+        } else {
+            Collections.sort(allSlavesOfCompany, Collections.<Employee>reverseOrder()); // сортируем по убыванию
+            return allSlavesOfCompany.subList(0, count);
+        }
     }
 
     public List<Employee> getLowestSalaryStaff(int count) {
-        Collections.sort(allSlavesOfCompany);                              // по возрастанию метод коллекции сортируются по дефолту
-        return allSlavesOfCompany.subList(0, count);
+        if (count < 0 || count > allSlavesOfCompany.size()) {
+            System.err.println("Неправильный параметр - количество сотрудников!");
+            return new ArrayList<Employee>();
+        } else {
+            Collections.sort(allSlavesOfCompany);                              // по возрастанию метод коллекции сортируются по дефолту
+            return allSlavesOfCompany.subList(0, count);
+        }
     }
+
 }

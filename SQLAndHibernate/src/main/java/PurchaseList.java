@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "purchaselist")
+@Table(name = "PurchaseList")
 public class PurchaseList implements Serializable {
     @EmbeddedId
     private PurchaseKey id;

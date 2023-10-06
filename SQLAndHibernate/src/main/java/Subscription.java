@@ -10,7 +10,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table (name = "subscriptions")
+@Table (name = "Subscriptions")
 
 public class Subscription {
     @EmbeddedId

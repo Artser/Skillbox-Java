@@ -1,5 +1,7 @@
 package practice;
+
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class DepositAccount extends BankAccount {
     private Calendar lastIncome;
@@ -13,11 +15,11 @@ public class DepositAccount extends BankAccount {
     @Override
     public void take(double amountToTake) {
         Calendar income = Calendar.getInstance();
-        lastIncome.add(Calendar.MONTH, 1);
-        double scoreDeposit = getAmount();
-        if (income.after(lastIncome) && amountToTake <= getAmount()) {
-            scoreDeposit = scoreDeposit - amountToTake;
+        Calendar copyOfLastIncome = new GregorianCalendar(lastIncome.get(Calendar.YEAR),
+                lastIncome.get(Calendar.MONTH), lastIncome.get(Calendar.DATE));
+        copyOfLastIncome.add(Calendar.MONTH, 1);
+        if (income.after(copyOfLastIncome) && amountToTake <= getAmount()) {
+            setScore(getAmount() - amountToTake);
         }
-        setScore(scoreDeposit);
     }
 }

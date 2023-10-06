@@ -18,13 +18,15 @@ public class TopManager implements Employee {
     @Override
     public void setSalary() {
         this.baseSalary = BigDecimal.valueOf(ThreadLocalRandom.current().nextDouble(40000.0, 100000.0)); // базовый оклад
-        this.recalculationBonus(this.ownCompany.getIncome()); // при назначении зарплаты тоже пересчитываем бонус
+        this.recalculationBonus(); // при назначении зарплаты тоже пересчитываем бонус
     }
 
-    public void recalculationBonus(BigDecimal income) {
-        if (income.compareTo(BigDecimal.valueOf(10000000)) >= 0) {
+    public void recalculationBonus() {
+        if (ownCompany.getIncome().compareTo(BigDecimal.valueOf(10000000)) >= 0) {
             this.bonus = this.baseSalary.multiply(BigDecimal.valueOf(1.5));
-        } else this.bonus = BigDecimal.valueOf(0.0);
+        } else {
+            this.bonus = BigDecimal.valueOf(0.0);
+        }
     }
 
     @Override
@@ -47,4 +49,5 @@ public class TopManager implements Employee {
     public String toString() {
         return "Топ-менеджер " + this.name + " - " + this.getMonthSalary().setScale(2, RoundingMode.HALF_DOWN);
     }
+
 }
