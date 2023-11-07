@@ -4,7 +4,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public class Multithreading extends Thread{
+public class Multithreading extends Thread {
     private final File[] files;
     private final int newWidth;
     private final String dstFolder;
@@ -14,8 +14,10 @@ public class Multithreading extends Thread{
         this.newWidth = newWidth;
         this.dstFolder = dstFolder;
     }
+
     @Override
     public void run() {
+        long start = System.currentTimeMillis();
         try {
             for (File file : files) {
                 BufferedImage image = ImageIO.read(file);
@@ -23,19 +25,42 @@ public class Multithreading extends Thread{
                     continue;
                 }
 
-                int newHeight = (int) Math.round(
-                        image.getHeight() / (image.getWidth() / (double) newWidth));
-
-/*                BufferedImage newImage = new BufferedImage(
-                        newWidth, newHeight, BufferedImage.TYPE_INT_RGB);*/
-                BufferedImage scaledImg = Scalr.resize(image, Scalr.Mode.AUTOMATIC,
-                        newWidth, newHeight);
+                BufferedImage newImage = getImage_2(image);
 
                 File newFile = new File(dstFolder + "/" + file.getName());
-                ImageIO.write(scaledImg, "jpg", newFile);
+                ImageIO.write(newImage, "jpg", newFile);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        System.out.println("Duration: " + (System.currentTimeMillis() - start));
     }
+
+    //способ ручной
+    private BufferedImage getImage_1(BufferedImage image) {
+        int newHeight = (int) Math.round(image.getHeight() / (image.getWidth()  / (double) newWidth));
+        BufferedImage newImage = new BufferedImage(
+                newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+
+        int widthStep = image.getWidth() / newWidth;
+        int heightStep = image.getHeight() / newHeight;
+
+        for (int x = 0; x < newWidth; x++) {
+            for (int y = 0; y < newHeight; y++) {
+                int rgb = image.getRGB(x * widthStep, y * heightStep);
+                newImage.setRGB(x , y , rgb);
+            }
+        }
+
+        return newImage;
+
+    }
+
+    //способ использования библиотеки Imgscalr
+    private BufferedImage getImage_2 (BufferedImage image) {
+        int newHeight = (int) Math.round(image.getHeight() / (image.getHeight() / (double) newWidth));
+        return Scalr.resize(image, Scalr.Mode.AUTOMATIC, newWidth, newHeight);
+    }
+
+
 }
