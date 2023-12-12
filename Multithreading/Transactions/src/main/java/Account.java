@@ -3,13 +3,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Account {
 
+public class Account {
     private long money;
     private String accNumber;
     private Boolean isBlocked;
 
-    public Account (String accNumber, long money) {
+    public  Account(String accNumber, Long money) {
         this.accNumber = accNumber;
         this.money = money;
         isBlocked = false;
@@ -18,13 +18,12 @@ public class Account {
     public boolean getStatus() {
         return isBlocked;
     }
-    public void blockedAccount() {
+
+    public void blockAccount(){
         isBlocked = true;
-        setMoney(0);
     }
 
     public String toString() {
-        return "Your account number: " + getAccNumber() +
-                ". And Your balance: " + getMoney() + " rub.";
+        return "You account number: " + getAccNumber() + ". And Your balance: " + getMoney() + " rub.";
     }
 }
